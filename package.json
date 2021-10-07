@@ -4,8 +4,18 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "start": "rollup -cw",
+    "build": "env NODE_ENV=production rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@wasm-tool/rollup-plugin-rust": "^1.0.7",
+    "rollup": "^2.58.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-styles": "^3.14.1"
+  }
 }

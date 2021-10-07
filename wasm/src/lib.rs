@@ -1,4 +1,5 @@
 use wasm_bindgen::prelude::*;
+use js_sys::*;
 
 #[wasm_bindgen]
 extern "C" {
@@ -49,8 +50,8 @@ impl World {
         self.height
     }
 
-    pub fn cells(&self) -> *const u8 {
-        self.cells.as_ptr()
+    pub fn cells(&self) -> Uint8Array {
+        unsafe { Uint8Array::view(&self.cells) }
     }
 
     pub fn cell(&self, x: usize, y: usize) -> u8 {

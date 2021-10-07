@@ -1,22 +1,16 @@
-import init, { World } from '../wasm/pkg/chainreaction.js'
+import './index.css'
+import initWasm from '../wasm/Cargo.toml'
 
 async function main() {
-    let initResult = await init()
-    let memory = initResult.memory
-
+    let { World } = await initWasm()
+    
     let world = World.new(16, 16)
-    let data = new Uint8Array(
-        memory.buffer,
-        world.cells(),
-        world.width() * world.height()
-    )
 
     let state = {
         offsetX: 0,
         offsetY: 0,
         resolution: 32,
         world,
-        data,
         mouseMoved: false,
         mouseDown: false,
         mouse: null,
@@ -25,9 +19,9 @@ async function main() {
 
     let canvas = document.getElementById('canvas')
 
-    // setInterval(() => {
-    //     if (state.mouseDown && !state.mouseMoved) inc_at_mouse(state)
-    // }, 0.125)
+    setInterval(() => {
+        if (state.mouseDown && !state.mouseMoved) inc_at_mouse(state)
+    }, 0.125)
 
     canvas.addEventListener('mousedown', (e) => {
         state.mouseDown = true
@@ -83,7 +77,7 @@ function circle(ctx, state, x, y, size_div) {
 }
 
 function drawGrid(canvas, state) {
-    let { world, data, resolution } = state
+    let { world, resolution } = state
     let ctx = canvas.getContext('2d')
     ctx.fillStyle = '#000'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -108,7 +102,7 @@ function drawGrid(canvas, state) {
     for (let x = 0; x < world.width(); x++) {
         for (let y = 0; y < world.height(); y++) {
             ctx.beginPath()
-            switch (data[x * world.width() + y]) {
+            switch (world.cells()[x * world.width() + y]) {
                 case 0:
                     break
                 case 1:
