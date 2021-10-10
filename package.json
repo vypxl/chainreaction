@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "rollup -cw",
+    "dev": "rollup -cw",
     "build": "env NODE_ENV=production rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
